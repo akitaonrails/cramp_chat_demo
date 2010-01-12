@@ -1,13 +1,10 @@
 module ApplicationHelper
+  def respond_with
+    [200, {'Content-Type' => 'application/json'}]
+  end
+  
   private
   def formatted_msg(message)
-    if message.is_a? Chat
-      ["<div>
-          <span class=\"from\">At #{message.sent_at.to_formatted_s(:short)}, #{message.name} said:</span>
-          <span class=\"msg\">#{message.message}</span>
-        </div>", "\n"]
-    else
-      ["<p>#{message}</p>", "\n"]
-    end
+    [[{ "message" => message }].to_json, "\n"]
   end
 end

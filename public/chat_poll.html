@@ -34,6 +34,8 @@
     <script type="text/javascript"
       src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 	  <script type="text/javascript">	
+			var lastTimestamp = {};
+	
 	    // method used to update element html
 			$(document).ready(function() {
 				$("#msg").focus();				
@@ -41,23 +43,36 @@
 					$.ajax({
 						url: "http://foo.com.br:3000/retrieve",
 						type: "GET",
-						success: output,
+						data: lastTimestamp,
+						dataType: "json",
+						success: function(data) {
+							$.each(data, function(i, item) {
+								$("#messages").append( "<div><span class=\"from\">" + item.from + ":</span>\n<span class=\"msg\">" + item.msg + "</span></div>");
+								lastTimestamp = { last_timestamp: item.timestamp }
+							});
+							scrollDown();
+						},
 					})
-				}, 3000);
+				}, 5000);
 			});
 
 	    function onSubmit() {
 				$.ajax({
 					url: "http://foo.com.br:3000/receive",
-					type: "GET",
+					type: "POST",
+					dataType: "json",
 					data: $("#chat-form").serialize(),
-					success: output,
+					success: function(data) {
+						$.each(data, function(i, item){
+							$("#messages").append( "<p>" + item.message + "</p>");
+						})
+						scrollDown();
+					},
 				});
 				$("#msg").val("").focus();
 	    }
 
-	    function output(str) {
-	      $("#messages").append(str);
+	    function scrollDown() {
 				var messages = document.getElementById("messages");
 				messages.scrollTop = messages.scrollHeight;
 	    }

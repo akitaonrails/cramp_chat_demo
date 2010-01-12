@@ -3,7 +3,7 @@ require 'sinatra'
 require 'thin'
 
 class MyApp < Sinatra::Base
-  enable :static
+  set :static, true
 end
 
 Thin::Logging.trace = true

@@ -46,18 +46,18 @@
 			function initConnection() {
 	      // Connect to Web Socket.
 	      // Change host/port here to your own Web Socket server.
-	      ws = new WebSocket("ws://foo.com.br:3000/");
+	      ws = new WebSocket("ws://foo.com.br:3000/websocket");
 
 	      // Set event handlers.
 	      ws.onopen = function() {
-	        output("<p>Connection opened</p>");
+	        output([{message: "Connection opened"}]);
 	      };
 	      ws.onmessage = function(e) {
 	        // e.data contains received string.
-	        output(e.data);
+	        output(eval(e.data));
 	      };
 	      ws.onclose = function() {
-	        output("<p>Connection closed</p>");
+	        output([{message: "Connection closed"}]);
 					initConnection(); // reconnect
 	      };	
 			}
@@ -73,8 +73,15 @@
 				$("#msg").focus();
 	    }
 
-	    function output(str) {
-	      $("#messages").append(str);
+	    function output(data) {
+				$.each(data, function(i, item) {
+					if (item.from != null) {
+						$("#messages").append( "<div><span class=\"from\">" + item.from + ":</span>\n<span class=\"msg\">" + item.msg + "</span></div>");						
+					}
+					if (item.message != null) {
+						$("#messages").append( "<p>" + item.message + "</p>");
+					}
+				})
 				var messages = document.getElementById("messages");
 				messages.scrollTop = messages.scrollHeight;
 	    }

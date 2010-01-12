@@ -1,12 +1,12 @@
 def app_routes
-  Usher::Interface.for(:rack) do
-    get('/').to(ChatController)
-    get('/retrieve').to(RetrieveController)
-    post('/receive').to(ReceiveController)
-  end
+  # Usher::Interface.for(:rack) do
+  #   get('/').to(ChatController)
+  #   get('/retrieve').to(RetrieveController)
+  #   post('/receive').to(ReceiveController)
+  # end
   
   # Rack::Builder.new do
-  #   use Rack::Static, :urls => ["/demo"]
+  #   use Rack::Static, :urls => ["/public"]
   #   use Rack::Session::Cookie
   #   
   #   routes = Usher::Interface.for(:rack) do
@@ -17,14 +17,13 @@ def app_routes
   #   run routes
   # end
   
-  # Rack::Builder.new do
-  #   use Rack::ContentType, "text/html"
-  #   use Rack::Static, :urls => ["/demo"]
-  #   use Rack::Session::Cookie
-  #   
-  #   map("/") { run RetrieveController }
-  #   map("/retrieve") { run RetrieveController }
-  #   map("/receive") { run ReceiveController }
-  # end
+  Rack::Builder.new do
+    use Rack::Static, :urls => ["/public"]
+    use Rack::Session::Cookie
+    
+    map("/websocket") { run ChatController }
+    map("/retrieve") { run RetrieveController }
+    map("/receive") { run ReceiveController }
+  end
 
 end

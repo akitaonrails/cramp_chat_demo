@@ -5,8 +5,9 @@ class ChatController < WebSocketApplicationController
   def retrieve_messages
     @last_message ||= (Time.now - 1.minute)
     Chat.recent(@last_message).all do |messages|
-      messages.each { |msg| render( formatted_msg(msg) ) }
+      list = messages.map { |msg| { "from" => msg.name, "msg" => msg.message, "sent" => msg.sent_at.to_formatted_s(:short) } }
       @last_message = messages.first.try(:sent_at) || @last_message
+      render [list.to_json, "\n"]
     end
   end
   

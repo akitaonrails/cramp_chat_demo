@@ -5,6 +5,7 @@ require 'cramp/controller'
 require 'cramp/model'
 require 'ruby-debug'
 require 'active_support/all'
+require 'active_support/json'
 
 require 'config/routes'
 require 'app/helpers/application'
