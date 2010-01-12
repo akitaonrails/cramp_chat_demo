@@ -4,7 +4,7 @@ create database cramp_chat_development
 
 use cramp_chat_development;
 
-create table chat ( 
+create table chats (
   id int not null auto_increment, 
   name varchar(100) not null, 
   message text, 
