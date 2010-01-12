@@ -7,6 +7,7 @@ def app_routes
       get('/websocket').to(ChatController)
       get('/retrieve').to(RetrieveController)
       post('/receive').to(ReceiveController)
+      get('/(:file)').to(StaticController)
     end
     run routes
   end

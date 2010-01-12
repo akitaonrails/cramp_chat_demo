@@ -41,7 +41,7 @@
 				$("#msg").focus();				
 				setInterval(function() {
 					$.ajax({
-						url: "http://foo.com.br:3000/retrieve",
+						url: "http://<%= request.host_with_port %>/retrieve",
 						type: "GET",
 						data: lastTimestamp,
 						dataType: "json",
@@ -58,7 +58,7 @@
 
 	    function onSubmit() {
 				$.ajax({
-					url: "http://foo.com.br:3000/receive",
+					url: "http://<%= request.host_with_port %>/receive",
 					type: "POST",
 					dataType: "json",
 					data: $("#chat-form").serialize(),

@@ -46,7 +46,7 @@
 			function initConnection() {
 	      // Connect to Web Socket.
 	      // Change host/port here to your own Web Socket server.
-	      ws = new WebSocket("ws://foo.com.br:3000/websocket");
+	      ws = new WebSocket("ws://<%= request.host_with_port %>/websocket");
 
 	      // Set event handlers.
 	      ws.onopen = function() {
