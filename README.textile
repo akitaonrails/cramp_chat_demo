@@ -8,33 +8,52 @@ h2. Usage
 
 This should install all the dependencies
 
-bc.
+<pre>
+  gem install arel --pre
+  gem install activemodel --pre
   gem install thin
   gem install cramp
+</pre>
 
 You will need a valid hostname if you're going to test it under your machine so edit your @/etc/hosts@ and add:
 
-bc.
+<pre>
   127.0.0.1	localhost foo.com.br
+</pre>
+
+This demo uses MySQL, so you will need to create your own database. Read @config/database.sql@ to create it and edit @config/database.yml@ with the correct server, username and password.
 
 If you want to test the WebSocket implementation outside of Google Chrome 4+, the app loads "web-socket.js":http://github.com/gimite/web-socket-js. As it uses Flash connection it is required that the server provides a policy file. This app uses "Peleus Uhley":http://www.adobe.com/devnet/flashplayer/articles/socket_policy_files.html implementation available in the @extra@ folder. Start it like this:
 
-bc.
+<pre>
   cd extra
   sudo python flashpolicyd.py --port 843 --file crossdomain.xml
+</pre>
 
 It has to be @sudo@ because 843 is a privileged port. Now you need to start up the application itself:
 
-bc.
+<pre>
   ruby chatserver.rb
+</pre>
 
 It will start the server on the port 3000. So you can fire up a webbrowser and use either of these URLs:
 
-bc.
-  http://foo.com.br/public/chat.html
-  http://foo.com.br/public/chat_poll_.html
+<pre>
+  http://foo.com.br:3000/public/chat.html
+  http://foo.com.br:3000/public/chat_poll.html
+</pre>
 
 The first URL is the WebSocket version. The second is a more usual Ajax Polling version, which may be more compatible with webbrowsers. As the WebSocket version uses Flash it's less friendly to environments behind proxies and firewalls.
+
+You can also test the server using @curl@
+
+<pre>
+  curl http://foo.com.br:3000/websocket
+  curl http://foo.com.br:3000/retrieve
+  curl -d "from=foo&msg=hello" http://foo.com.br:3000/receive
+</pre>
+
+The first URL will keep an open HTTP connection, receiving new messages as they are inserted in the database. The second one retrieves the last few messages and you can pass a 'last_timestamp' parameter to the URL with the value having the format of @Time.now.to_formatted_s(:db)@. Finally, the third operation simulates a form post to add new messages. The first URL is the WebSocket version, the last 2 are the polling version.
 
 h2. Known Issues
 

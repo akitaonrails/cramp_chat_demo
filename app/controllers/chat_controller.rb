@@ -12,6 +12,7 @@ class ChatController < WebSocketApplicationController
   end
   
   def receive_message(data)
+    debugger
     params = Rack::Utils.parse_query(data)
     
     chat = Chat.new :name => params["from"],
