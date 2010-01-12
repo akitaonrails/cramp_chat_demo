@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- Copyright (c) 2008 Dustin Sallings <dustin+html@spy.net> -->
+<html lang="en">
+  <head>
+    <title>chat</title>
+		<style type="text/css" media="screen">
+			#messages {
+				width: 400px; 
+				height: 250px; 
+				overflow: auto;
+			}
+		</style>
+  </head>
+
+  <body>
+    <h1>Welcome to Chat</h1>
+
+    <div id="messages">
+      <div>
+        <span class="from">First!:</span>
+        <span class="msg">Welcome to chat. Please don't hurt each other.</span>
+      </div>
+    </div>
+
+    <form id="chat-form" onsubmit="onSubmit(); return false;">
+      <div><label for="from">Nick:</label> <input id='from' type="text" name="from" value="Foo"/></div>
+      <div><label for="msg">Message:</label></div>
+      <div><textarea id='msg' name="msg" rows="3" cols="50"></textarea></div>
+      <div><input type="submit" value="Say it" id="submit"/></div>
+    </form>
+
+    <script type="text/javascript"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+	  <script type="text/javascript">	
+	    // method used to update element html
+			$(document).ready(function() {
+				$("#msg").focus();				
+				setInterval(function() {
+					$.ajax({
+						url: "http://foo.com.br:3000/retrieve",
+						type: "GET",
+						success: output,
+					})
+				}, 3000);
+			});
+
+	    function onSubmit() {
+				$.ajax({
+					url: "http://foo.com.br:3000/receive",
+					type: "GET",
+					data: $("#chat-form").serialize(),
+					success: output,
+				});
+				$("#msg").val("").focus();
+	    }
+
+	    function output(str) {
+	      $("#messages").append(str);
+				var messages = document.getElementById("messages");
+				messages.scrollTop = messages.scrollHeight;
+	    }
+
+	  </script>
+  </body>
+</html>
