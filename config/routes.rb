@@ -3,9 +3,11 @@ def app_routes
     use Rack::Static, :urls => ["/public"]
     use Rack::Session::Cookie
     
-    map("/websocket") { run ChatController }
-    map("/retrieve") { run RetrieveController }
-    map("/receive") { run ReceiveController }
+    routes = Usher::Interface.for(:rack) do
+      get('/websocket').to(ChatController)
+      get('/retrieve').to(RetrieveController)
+      post('/receive').to(ReceiveController)
+    end
+    run routes
   end
-
 end

@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'thin'
+require 'usher'
 require 'cramp/controller'
 require 'cramp/model'
 require 'active_support/all'
