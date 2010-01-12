@@ -58,6 +58,7 @@ The first URL will keep an open HTTP connection, receiving new messages as they 
 h2. Known Issues
 
 * In the WebSocket version, sending data is not returning the expected results
+* In Firefox and Safari, I had the web-socket.js working properly, but for some reason it stopped working. Beware of flash blockers in your browser.
 * In the Polling version it is manually setting the last message's timestamp in the URL. I was still now able to make a version using a Rack::Session
 * Just because it is a proof-of-concept, it uses Rack::Static to serve the HTML and JS files, but it's not certain that this is the best way to do it
 * Up until Cramp 0.9, it depends on ActiveRecord, take a look at @lib/fixes.rb@
