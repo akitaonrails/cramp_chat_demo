@@ -1,0 +1,55 @@
+h2. Cramp Chat Demo
+
+"Cramp":http://m.onkey.org/2010/1/7/introducing-cramp is an asynchronous web framework still under development by "Pratik Naik":http://m.onkey.org/ which shows great promise for its use of "EventMachine":http://rubyeventmachine.com/.
+
+This is just a proof-of-concept app to showcase Cramp's potential.
+
+h2. Usage
+
+This should install all the dependencies
+
+bc.
+  gem install thin
+  gem install cramp
+
+You will need a valid hostname if you're going to test it under your machine so edit your @/etc/hosts@ and add:
+
+bc.
+  127.0.0.1	localhost foo.com.br
+
+If you want to test the WebSocket implementation outside of Google Chrome 4+, the app loads "web-socket.js":http://github.com/gimite/web-socket-js. As it uses Flash connection it is required that the server provides a policy file. This app uses "Peleus Uhley":http://www.adobe.com/devnet/flashplayer/articles/socket_policy_files.html implementation available in the @extra@ folder. Start it like this:
+
+bc.
+  cd extra
+  sudo python flashpolicyd.py --port 843 --file crossdomain.xml
+
+It has to be @sudo@ because 843 is a privileged port. Now you need to start up the application itself:
+
+bc.
+  ruby chatserver.rb
+
+It will start the server on the port 3000. So you can fire up a webbrowser and use either of these URLs:
+
+bc.
+  http://foo.com.br/public/chat.html
+  http://foo.com.br/public/chat_poll_.html
+
+The first URL is the WebSocket version. The second is a more usual Ajax Polling version, which may be more compatible with webbrowsers. As the WebSocket version uses Flash it's less friendly to environments behind proxies and firewalls.
+
+h2. Known Issues
+
+* In the WebSocket version, sending data is not returning the expected results
+* In the Polling version it is manually setting the last message's timestamp in the URL. I was still now able to make a version using a Rack::Session
+* Just because it is a proof-of-concept, it uses Rack::Static to serve the HTML and JS files, but it's not certain that this is the best way to do it
+* Up until Cramp 0.9, it depends on ActiveRecord, take a look at @lib/fixes.rb@
+
+h2. TODO
+
+* Add CSS to make the demo a little bit more compelling
+* Add multiple room and user registration support, but this requires exchanging session information as well. Making Rack::Session work may be a requirement
+* Add templating than just static file to allow for some HAML or ERB views, adding Tilt to Cramp would be good as well
+
+h2. Credits
+
+* "Pratik Naik":http://m.onkey.org/ for Cramp
+* "Fabio Akita":http://www.akitaonrails.com for the Demo
