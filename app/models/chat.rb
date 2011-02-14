@@ -1,4 +1,4 @@
-class Chat < Cramp::Model::Base
+class Chat < Tramp::Base
   attribute :id, :type => Integer, :primary_key => true
   attribute :name
   attribute :sent_at

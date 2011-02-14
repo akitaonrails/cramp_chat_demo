@@ -1,7 +1,7 @@
-class ApplicationController < Cramp::Controller::Action
+class ApplicationController < Cramp::Action
   include ApplicationHelper
 end
 
-class WebSocketApplicationController < Cramp::Controller::Websocket
+class WebSocketApplicationController < Cramp::Websocket
   include ApplicationHelper
 end

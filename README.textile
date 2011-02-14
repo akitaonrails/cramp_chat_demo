@@ -9,10 +9,9 @@ h2. Usage
 This should install all the dependencies
 
 <pre>
-  gem install arel --pre
-  gem install activemodel --pre
   gem install thin
   gem install cramp
+  gem install tramp
 </pre>
 
 This demo uses MySQL, so you will need to create your own database. Read @config/database.sql@ to create it and edit @config/database.yml@ with the correct server, username and password.
@@ -61,6 +60,10 @@ h2. TODO
 * Add CSS to make the demo a little bit more compelling
 * Add multiple room and user registration support, but this requires exchanging session information as well. Making Rack::Session work may be a requirement
 * Add templating than just static file to allow for some HAML or ERB views, adding Tilt to Cramp would be good as well
+
+h2. Changelog
+
+* 02/14/2011 - Updated to Cramp 0.12 and the new Tramp gem.
 
 h2. Credits
 
