@@ -9,9 +9,7 @@ h2. Usage
 This should install all the dependencies
 
 <pre>
-  gem install thin
-  gem install cramp
-  gem install tramp
+  bundle install
 </pre>
 
 This demo uses MySQL, so you will need to create your own database. Read @config/database.sql@ to create it and edit @config/database.yml@ with the correct server, username and password.

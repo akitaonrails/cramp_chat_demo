@@ -5,13 +5,13 @@
 <html lang="en">
   <head>
     <title>chat</title>
-		<style type="text/css" media="screen">
-			#messages {
-				width: 400px; 
-				height: 250px; 
-				overflow: auto;
-			}
-		</style>
+    <style type="text/css" media="screen">
+      #messages {
+        width: 400px; 
+        height: 250px; 
+        overflow: auto;
+      }
+    </style>
   </head>
 
   <body>
@@ -33,59 +33,59 @@
 
     <script type="text/javascript"
       src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-	  <script type="text/javascript" src="javascript/swfobject.js"></script>
-	  <script type="text/javascript" src="javascript/FABridge.js"></script>
-	  <script type="text/javascript" src="javascript/web_socket.js"></script>
-	  <script type="text/javascript">
+    <script type="text/javascript" src="javascript/swfobject.js"></script>
+    <script type="text/javascript" src="javascript/FABridge.js"></script>
+    <script type="text/javascript" src="javascript/web_socket.js"></script>
+    <script type="text/javascript">
 
-	    // Set URL of your WebSocketMain.swf here:
-	    WebSocket.__swfLocation = "javascript/WebSocketMain.swf";
+      // Set URL of your WebSocketMain.swf here:
+      WebSocket.__swfLocation = "javascript/WebSocketMain.swf";
 
-	    var ws;
+      var ws;
 
-			function initConnection() {
-	      // Connect to Web Socket.
-	      // Change host/port here to your own Web Socket server.
-	      ws = new WebSocket("ws://<%= request.host_with_port %>/websocket");
+      function initConnection() {
+        // Connect to Web Socket.
+        // Change host/port here to your own Web Socket server.
+        ws = new WebSocket("ws://<%= request.host_with_port %>/websocket");
 
-	      // Set event handlers.
-	      ws.onopen = function() {
-	        output([{message: "Connection opened"}]);
-	      };
-	      ws.onmessage = function(e) {
-	        // e.data contains received string.
-	        output(eval(e.data));
-	      };
-	      ws.onclose = function() {
-	        output([{message: "Connection closed"}]);
-					initConnection(); // reconnect
-	      };	
-			}
-	
-			$(document).ready(function() {
-				initConnection();
-				$("#msg").focus();
-			});
+        // Set event handlers.
+        ws.onopen = function() {
+          output([{message: "Connection opened"}]);
+        };
+        ws.onmessage = function(e) {
+          // e.data contains received string.
+          output(eval(e.data));
+        };
+        ws.onclose = function() {
+          output([{message: "Connection closed"}]);
+          initConnection(); // reconnect
+        };  
+      }
+  
+      $(document).ready(function() {
+        initConnection();
+        $("#msg").focus();
+      });
 
-	    function onSubmit() {
-				ws.send($("#chat-form").serialize());
-				$("#msg").val("");
-				$("#msg").focus();
-	    }
+      function onSubmit() {
+        ws.send($("#chat-form").serialize());
+        $("#msg").val("");
+        $("#msg").focus();
+      }
 
-	    function output(data) {
-				$.each(data, function(i, item) {
-					if (item.from != null) {
-						$("#messages").append( "<div><span class=\"from\">" + item.from + ":</span>\n<span class=\"msg\">" + item.msg + "</span></div>");						
-					}
-					if (item.message != null) {
-						$("#messages").append( "<p>" + item.message + "</p>");
-					}
-				})
-				var messages = document.getElementById("messages");
-				messages.scrollTop = messages.scrollHeight;
-	    }
+      function output(data) {
+        $.each(data, function(i, item) {
+          if (item.from != null) {
+            $("#messages").append( "<div><span class=\"from\">" + item.from + ":</span>\n<span class=\"msg\">" + item.msg + "</span></div>");            
+          }
+          if (item.message != null) {
+            $("#messages").append( "<p>" + item.message + "</p>");
+          }
+        })
+        var messages = document.getElementById("messages");
+        messages.scrollTop = messages.scrollHeight;
+      }
 
-	  </script>
+    </script>
   </body>
 </html>

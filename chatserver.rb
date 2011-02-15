@@ -1,7 +1,9 @@
 require 'rubygems'
-require 'thin'
+require 'bundler'
+Bundler.setup(:default)
+
 require 'usher'
-require 'erb'
+require 'thin'
 require 'cramp'
 require 'tramp'
 require 'active_support/all'

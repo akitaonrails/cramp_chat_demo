@@ -5,13 +5,13 @@
 <html lang="en">
   <head>
     <title>chat</title>
-		<style type="text/css" media="screen">
-			#messages {
-				width: 400px; 
-				height: 250px; 
-				overflow: auto;
-			}
-		</style>
+    <style type="text/css" media="screen">
+      #messages {
+        width: 400px; 
+        height: 250px; 
+        overflow: auto;
+      }
+    </style>
   </head>
 
   <body>
@@ -33,50 +33,50 @@
 
     <script type="text/javascript"
       src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-	  <script type="text/javascript">	
-			var lastTimestamp = {};
-	
-	    // method used to update element html
-			$(document).ready(function() {
-				$("#msg").focus();				
-				setInterval(function() {
-					$.ajax({
-						url: "http://<%= request.host_with_port %>/retrieve",
-						type: "GET",
-						data: lastTimestamp,
-						dataType: "json",
-						success: function(data) {
-							$.each(data, function(i, item) {
-								$("#messages").append( "<div><span class=\"from\">" + item.from + ":</span>\n<span class=\"msg\">" + item.msg + "</span></div>");
-								lastTimestamp = { last_timestamp: item.timestamp }
-							});
-							scrollDown();
-						},
-					})
-				}, 5000);
-			});
+    <script type="text/javascript">  
+      var lastTimestamp = {};
+  
+      // method used to update element html
+      $(document).ready(function() {
+        $("#msg").focus();        
+        setInterval(function() {
+          $.ajax({
+            url: "http://<%= request.host_with_port %>/retrieve",
+            type: "GET",
+            data: lastTimestamp,
+            dataType: "json",
+            success: function(data) {
+              $.each(data, function(i, item) {
+                $("#messages").append( "<div><span class=\"from\">" + item.from + ":</span>\n<span class=\"msg\">" + item.msg + "</span></div>");
+                lastTimestamp = { last_timestamp: item.timestamp }
+              });
+              scrollDown();
+            },
+          })
+        }, 1000);
+      });
 
-	    function onSubmit() {
-				$.ajax({
-					url: "http://<%= request.host_with_port %>/receive",
-					type: "POST",
-					dataType: "json",
-					data: $("#chat-form").serialize(),
-					success: function(data) {
-						$.each(data, function(i, item){
-							$("#messages").append( "<p>" + item.message + "</p>");
-						})
-						scrollDown();
-					},
-				});
-				$("#msg").val("").focus();
-	    }
+      function onSubmit() {
+        $.ajax({
+          url: "http://<%= request.host_with_port %>/receive",
+          type: "POST",
+          dataType: "json",
+          data: $("#chat-form").serialize(),
+          success: function(data) {
+            $.each(data, function(i, item){
+              $("#messages").append( "<p>" + item.message + "</p>");
+            })
+            scrollDown();
+          },
+        });
+        $("#msg").val("").focus();
+      }
 
-	    function scrollDown() {
-				var messages = document.getElementById("messages");
-				messages.scrollTop = messages.scrollHeight;
-	    }
+      function scrollDown() {
+        var messages = document.getElementById("messages");
+        messages.scrollTop = messages.scrollHeight;
+      }
 
-	  </script>
+    </script>
   </body>
 </html>
