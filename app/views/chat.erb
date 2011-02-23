@@ -53,8 +53,9 @@
 
         // Set event handlers.
         ws.onopen = function() {
-          output([{message: "Connection opened"}]);
+          output([{from: 'Host', msg: ' Welcome to chat. Please don\'t hurt each other.'}]);
         };
+
         ws.onmessage = function(e) {
           // e.data contains received string.
           output(eval(e.data));
@@ -62,9 +63,9 @@
         ws.onclose = function() {
           output([{message: "Connection closed"}]);
           initConnection(); // reconnect
-        };  
+        };
       }
-  
+
       $(document).ready(function() {
         initConnection();
         $("#msg").focus();
@@ -82,7 +83,7 @@
           $("#messages").append( '<li class="message"> <p><span class="from">' + item.from + ':</span> ' + item.msg + '</p> </li>');
           }
           if (item.message != null) {
-            $("#messages").append( "<p>" + item.message + "</p>");
+            $("#status").html( item.message);
           }
         })
         var messages = document.getElementById("messages");
