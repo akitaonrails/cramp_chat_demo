@@ -72,7 +72,7 @@
       });
 
       function onSubmit() {
-        ws.send($("#chat-form").serialize());
+        ws.send($("#form").serialize());
         $("#msg").val("");
         $("#msg").focus();
       }
