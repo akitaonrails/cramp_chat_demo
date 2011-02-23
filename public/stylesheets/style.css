@@ -1,0 +1,52 @@
+header h1{
+  text-align: center;
+  font-size: 50px;
+  color: #999;
+  }
+  #chat ol{
+    list-style: none;
+  }
+  #chat ol#messages{
+    height: 400px;
+    overflow: auto;
+  }
+  #chat li{
+    padding: 6px 10px;
+  }
+  #chat li.message{
+    border-top: 1px solid #CCC;
+  }
+  #chat {
+    margin: 0px auto;
+    height: 560px;
+    width: 700px;
+    overflow: hidden;
+    border: 1px solid #666;
+  }
+  #chat form {overflow: hidden;}
+  #chat form label{
+    display: block;
+    margin: 0 0 10px 0;
+    font: normal 18px/18px Verdana;
+  }
+  #chat form input[type=text], #chat form textarea{
+    margin: 3px 0;
+    font: normal 15px/16px Verdana;
+  }
+  #chat form li{
+
+    float: left;
+}
+#chat form #nick{
+  width: 200px;
+  }
+
+  #chat form textarea{
+    width: 454px;
+  }
+  #chat form #nick input{ width: 183px; }
+  #chat form #button{float: right;}
+p#status{
+color: black;
+padding: 0px 13px;
+  }
