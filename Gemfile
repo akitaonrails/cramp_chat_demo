@@ -1,11 +1,9 @@
-source 'http://rubygems.org'
+source :rubygems
 
-gem 'cramp', '~> 0.12'
-gem 'tramp', '~> 0.1'
+gem 'cramp', '~> 0.14.1'
+gem 'thin'
 
-gem 'activesupport', '3.0.4'
-gem 'rack', '~> 1.2.1'
-gem 'eventmachine', '~> 0.12.10'
+gem 'http_router'
 
-gem 'usher', '~> 0.8.3'
-gem 'thin', '~> 1.2.7'
+gem 'mysql2', '~> 0.2.11'
+gem 'activerecord'
