@@ -1,6 +1,6 @@
 h2. Cramp Chat Demo
 
-"Cramp":http://m.onkey.org/2010/1/7/introducing-cramp is an asynchronous web framework still under development by "Pratik Naik":http://m.onkey.org/ which shows great promise for its use of "EventMachine":http://rubyeventmachine.com/.
+"Cramp":http://cramp.in is an asynchronous web framework still under development by "Pratik Naik":http://m.onkey.org/ which shows great promise for its use of "EventMachine":http://rubyeventmachine.com/.
 
 This is just a proof-of-concept app to showcase Cramp's potential.
 
@@ -24,7 +24,7 @@ If you want to test the WebSocket implementation outside of Google Chrome 4+, th
 It has to be @sudo@ because 843 is a privileged port. Now you need to start up the application itself:
 
 <pre>
-  ruby chatserver.rb
+  bundle exec thin --timeout 0 -V -R config.ru start
 </pre>
 
 It will start the server on the port 3000. So you can fire up a webbrowser and use either of these URLs:
@@ -51,7 +51,6 @@ h2. Known Issues
 * In Firefox and Safari, I had the web-socket.js working properly, but for some reason it stopped working. Beware of flash blockers in your browser.
 * In the Polling version it is manually setting the last message's timestamp in the URL. I was still now able to make a version using a Rack::Session
 * Just because it is a proof-of-concept, it uses Rack::Static to serve the HTML and JS files, but it's not certain that this is the best way to do it
-* Up until Cramp 0.9, it depends on ActiveRecord, take a look at @lib/fixes.rb@
 
 h2. TODO
 
@@ -61,6 +60,7 @@ h2. TODO
 
 h2. Changelog
 
+* 02/14/2011 - Updated to Cramp 0.14.1 and Active Record + Ruby 1.9 + Fibers.
 * 02/14/2011 - Updated to Cramp 0.12 and the new Tramp gem.
 
 h2. Credits

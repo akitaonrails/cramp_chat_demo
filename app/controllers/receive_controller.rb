@@ -12,13 +12,13 @@ class ReceiveController < ApplicationController
       :sent_at => Time.now,
       :message => @params["msg"]
 
-    chat.save do |status|
-      if status.success?
-        render formatted_msg("Message Successfully Received.")
-      else
-        render formatted_msg("Error receiving message: #{status.inspect}.")
-      end
-      finish
+    if chat.save
+      render formatted_msg("Message Successfully Received.")
+    else
+      render formatted_msg("Error receiving message: #{status.inspect}.")
     end
+
+    finish
+
   end
 end

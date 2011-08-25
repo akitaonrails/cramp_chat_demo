@@ -1,4 +1,6 @@
---- 
-:database: cramp_chat_development
-:username: root
-:password: root
+development:
+  adapter: em_mysql2
+  database: cramp_chat_development
+  host: localhost
+  username: root
+  pool: 100

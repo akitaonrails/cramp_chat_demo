@@ -1,15 +1,15 @@
 class ChatController < WebSocketApplicationController
-  periodic_timer :retrieve_messages, :every => 2
+  periodic_timer :retrieve_messages, :every => 0.1
   on_data :receive_message
   
   def retrieve_messages
-    @last_message ||= (Time.now - 1.minute)
-    Chat.recent(@last_message).all do |messages|
+    messages = @last_message_id ? Chat.since(@last_message_id) : Chat.recent
+
+    if messages.any?
+      @last_message_id = messages.last.id
+
       list = messages.map { |msg| { "from" => msg.name, "msg" => msg.message, "sent" => msg.sent_at.to_formatted_s(:short) } }
-      if list.size > 0
-        @last_message = messages.first.try(:sent_at) || @last_message
-        render list.to_json
-      end
+      render list.to_json
     end
   end
   
@@ -20,12 +20,11 @@ class ChatController < WebSocketApplicationController
       :sent_at => Time.now,
       :message => params["msg"]
 
-    chat.save do |status|
-      if status.success?
-        render formatted_msg("Message Successfully Received.")
-      else
-        render formatted_msg("Error receiving message: #{status.inspect}.")
-      end
+    if chat.save
+      render formatted_msg("Message Successfully Received.")
+    else
+      render formatted_msg("Error receiving message: #{status.inspect}.")
     end
   end
+
 end
